@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF--8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>School Lessons App</title>
     <link rel="stylesheet" href="style.css">
@@ -11,43 +11,22 @@
     <div id="app" v-cloak>
         <header class="app-header">
             <div class="container header-content">
-                <h1 class="logo">School</h1>
-                <button class="cart-button">Cart (0)</button>
+                <h1 class="logo">{{ siteName }}</h1>
+                <button class="cart-button">Cart ({{ cart.length }})</button>
             </div>
         </header>
 
         <main class="container">
             <div class="lessons-grid">
-
-                <div class="lesson-card">
-                    <div class="lesson-image"></div>
-                    <div class="lesson-details">
-                        <h2>Maths</h2>
-                        <p>Location: London</p>
-                        <p>Price: £100</p>
-                        <p>Spaces: 5</p>
-                        <button class="add-to-cart-btn">Add to Cart</button>
+                <div class="lesson-card" v-for="lesson in lessons" :key="lesson.id">
+                    <div class="lesson-image">
+                        <img :src="lesson.image" :alt="lesson.subject">
                     </div>
-                </div>
-
-                <div class="lesson-card">
-                    <div class="lesson-image"></div>
                     <div class="lesson-details">
-                        <h2>Science</h2>
-                        <p>Location: Bristol</p>
-                        <p>Price: £120</p>
-                        <p>Spaces: 5</p>
-                        <button class="add-to-cart-btn">Add to Cart</button>
-                    </div>
-                </div>
-
-                <div class="lesson-card">
-                    <div class="lesson-image"></div>
-                    <div class="lesson-details">
-                        <h2>English</h2>
-                        <p>Location: Online</p>
-                        <p>Price: £90</p>
-                        <p>Spaces: 5</p>
+                        <h2>{{ lesson.subject }}</h2>
+                        <p>Location: {{ lesson.location }}</p>
+                        <p>Price: £{{ lesson.price }}</p>
+                        <p>Spaces: {{ lesson.spaces }}</p>
                         <button class="add-to-cart-btn">Add to Cart</button>
                     </div>
                 </div>

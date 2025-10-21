@@ -111,16 +111,30 @@ main.container {
     margin-bottom: 0.25rem;
 }
 
-.add-to-cart-btn {
-    background-color: #2ecc71;
+.card-actions {
+    margin-top: auto;
+    display: flex;
+    gap: 10px;
+}
+
+.add-to-cart-btn, .remove-one-btn {
     color: white;
     border: none;
     padding: 10px;
     width: 100%;
-    margin-top: auto;
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.2s ease;
+}
+
+.add-to-cart-btn {
+    background-color: #2ecc71;
+}
+
+.remove-one-btn {
+    background-color: #f39c12;
+    flex-shrink: 0;
+    width: auto;
 }
 
 .add-to-cart-btn:disabled {
@@ -150,6 +164,9 @@ main.container {
 }
 
 .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 1rem 0;
     border-bottom: 1px solid #e2e8f0;
 }
@@ -161,6 +178,15 @@ main.container {
 .item-details h3 {
     font-size: 1.1rem;
     margin-bottom: 0.25rem;
+}
+
+.remove-item-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
 .form-group {

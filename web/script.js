@@ -45,8 +45,27 @@ const app = Vue.createApp({
             this.cart.push(lesson);
             lesson.spaces -= 1;
         },
+        removeFromCart(item, index) {
+            this.cart.splice(index, 1);
+            item.spaces += 1;
+        },
+        removeOneFromCart(lesson) {
+            const index = this.cart.lastIndexOf(lesson);
+            if (index > -1) {
+                this.removeFromCart(lesson, index);
+            }
+        },
         toggleCartPage() {
             this.showCartPage = !this.showCartPage;
+        },
+        cartCount(lesson) {
+            let count = 0;
+            for (let i = 0; i < this.cart.length; i++) {
+                if (this.cart[i].id === lesson.id) {
+                    count++;
+                }
+            }
+            return count;
         }
     }
 });

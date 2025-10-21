@@ -30,9 +30,14 @@
                             <p>Location: {{ lesson.location }}</p>
                             <p>Price: £{{ lesson.price }}</p>
                             <p>Spaces: {{ lesson.spaces }}</p>
-                            <button class="add-to-cart-btn" @click="addToCart(lesson)" :disabled="lesson.spaces === 0">
-                                Add to Cart
-                            </button>
+                            <div class="card-actions">
+                                <button class="add-to-cart-btn" @click="addToCart(lesson)" :disabled="lesson.spaces === 0">
+                                    Add to Cart
+                                </button>
+                                <button class="remove-one-btn" v-if="cartCount(lesson) > 0" @click="removeOneFromCart(lesson)">
+                                    Remove
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -43,12 +48,13 @@
                     <div class="cart-items">
                         <h2>Shopping Cart</h2>
                         <div v-if="cart.length > 0">
-                            <div class="cart-item" v-for="item in cart" :key="item.id">
+                            <div class="cart-item" v-for="(item, index) in cart" :key="index">
                                 <div class="item-details">
                                     <h3>{{ item.subject }}</h3>
                                     <p>Location: {{ item.location }}</p>
                                     <p>Price: £{{ item.price }}</p>
                                 </div>
+                                <button class="remove-item-btn" @click="removeFromCart(item, index)">Remove All</button>
                             </div>
                         </div>
                         <p v-else>Your cart is currently empty.</p>

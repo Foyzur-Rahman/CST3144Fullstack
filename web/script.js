@@ -2,6 +2,7 @@ const app = Vue.createApp({
     data() {
         return {
             siteName: 'School Lessons',
+            showCartPage: false,
             lessons: [
                 {
                     id: 1,
@@ -38,6 +39,11 @@ const app = Vue.createApp({
             ],
             cart: []
         };
+    },
+    methods: {
+        toggleCartPage() {
+            this.showCartPage = !this.showCartPage;
+        }
     }
 });
 

@@ -12,22 +12,47 @@
         <header class="app-header">
             <div class="container header-content">
                 <h1 class="logo">{{ siteName }}</h1>
-                <button class="cart-button">Cart ({{ cart.length }})</button>
+                <button class="cart-button" @click="toggleCartPage">
+                    {{ showCartPage ? 'Back to Lessons' : 'Cart (' + cart.length + ')' }}
+                </button>
             </div>
         </header>
 
         <main class="container">
-            <div class="lessons-grid">
-                <div class="lesson-card" v-for="lesson in lessons" :key="lesson.id">
-                    <div class="lesson-image">
-                        <img :src="lesson.image" :alt="lesson.subject">
+            <div v-if="!showCartPage">
+                <div class="lessons-grid">
+                    <div class="lesson-card" v-for="lesson in lessons" :key="lesson.id">
+                        <div class="lesson-image">
+                            <img :src="lesson.image" :alt="lesson.subject">
+                        </div>
+                        <div class="lesson-details">
+                            <h2>{{ lesson.subject }}</h2>
+                            <p>Location: {{ lesson.location }}</p>
+                            <p>Price: £{{ lesson.price }}</p>
+                            <p>Spaces: {{ lesson.spaces }}</p>
+                            <button class="add-to-cart-btn">Add to Cart</button>
+                        </div>
                     </div>
-                    <div class="lesson-details">
-                        <h2>{{ lesson.subject }}</h2>
-                        <p>Location: {{ lesson.location }}</p>
-                        <p>Price: £{{ lesson.price }}</p>
-                        <p>Spaces: {{ lesson.spaces }}</p>
-                        <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+            </div>
+
+            <div v-else>
+                <div class="cart-container">
+                    <div class="cart-items">
+                        <h2>Shopping Cart</h2>
+                        <p>Your cart is currently empty.</p>
+                    </div>
+                    <div class="checkout-form">
+                        <h2>Checkout</h2>
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" id="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone:</label>
+                            <input type="text" id="phone">
+                        </div>
+                        <button class="checkout-btn">Submit Order</button>
                     </div>
                 </div>
             </div>

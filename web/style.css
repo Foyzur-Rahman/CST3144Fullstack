@@ -26,6 +26,9 @@ body {
     padding: 1rem 0;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     border-bottom: 1px solid #e2e8f0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 .header-content {
@@ -48,6 +51,8 @@ body {
     border-radius: 6px;
     font-weight: 500;
     cursor: pointer;
+    min-width: 130px;
+    text-align: center;
 }
 
 main.container {
@@ -108,5 +113,54 @@ main.container {
     width: 100%;
     margin-top: auto;
     border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Cart Page Styles */
+.cart-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.cart-items, .checkout-form {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.cart-items h2, .checkout-form h2 {
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 0.5rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+}
+
+.checkout-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 6px;
+    font-size: 1rem;
     cursor: pointer;
 }

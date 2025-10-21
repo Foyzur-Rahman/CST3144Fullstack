@@ -20,8 +20,22 @@
 
         <main class="container">
             <div v-if="!showCartPage">
+                <div class="controls-bar">
+                    <div class="sort-wrapper">
+                        <label for="sort-attribute">Sort by:</label>
+                        <select id="sort-attribute" v-model="sortAttribute">
+                            <option value="subject">Subject</option>
+                            <option value="location">Location</option>
+                            <option value="price">Price</option>
+                            <option value="spaces">Spaces</option>
+                        </select>
+                        <button @click="sortOrder = 'asc'" :class="{ active: sortOrder === 'asc' }">Asc</button>
+                        <button @click="sortOrder = 'desc'" :class="{ active: sortOrder === 'desc' }">Desc</button>
+                    </div>
+                </div>
+
                 <div class="lessons-grid">
-                    <div class="lesson-card" v-for="lesson in lessons" :key="lesson.id">
+                    <div class="lesson-card" v-for="lesson in sortedLessons" :key="lesson.id">
                         <div class="lesson-image">
                             <img :src="lesson.image" :alt="lesson.subject">
                         </div>
@@ -30,14 +44,9 @@
                             <p>Location: {{ lesson.location }}</p>
                             <p>Price: £{{ lesson.price }}</p>
                             <p>Spaces: {{ lesson.spaces }}</p>
-                            <div class="card-actions">
-                                <button class="add-to-cart-btn" @click="addToCart(lesson)" :disabled="lesson.spaces === 0">
-                                    Add to Cart
-                                </button>
-                                <button class="remove-one-btn" v-if="cartCount(lesson) > 0" @click="removeOneFromCart(lesson)">
-                                    Remove
-                                </button>
-                            </div>
+                            <button class="add-to-cart-btn" @click="addToCart(lesson)" :disabled="lesson.spaces === 0">
+                                Add to Cart
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -54,7 +63,7 @@
                                     <p>Location: {{ item.location }}</p>
                                     <p>Price: £{{ item.price }}</p>
                                 </div>
-                                <button class="remove-item-btn" @click="removeFromCart(item, index)">Remove All</button>
+                                <button class="remove-item-btn" @click="removeFromCart(item, index)">Remove</button>
                             </div>
                         </div>
                         <p v-else>Your cart is currently empty.</p>

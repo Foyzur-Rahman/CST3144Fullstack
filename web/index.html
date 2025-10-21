@@ -19,8 +19,12 @@
         </header>
 
         <main class="container">
+            <!-- Show Lessons Page -->
             <div v-if="!showCartPage">
                 <div class="controls-bar">
+                    <div class="search-wrapper">
+                        <input type="text" v-model="searchQuery" placeholder="Search for lessons...">
+                    </div>
                     <div class="sort-wrapper">
                         <label for="sort-attribute">Sort by:</label>
                         <select id="sort-attribute" v-model="sortAttribute">
@@ -35,7 +39,7 @@
                 </div>
 
                 <div class="lessons-grid">
-                    <div class="lesson-card" v-for="lesson in sortedLessons" :key="lesson.id">
+                    <div class="lesson-card" v-for="lesson in filteredAndSortedLessons" :key="lesson.id">
                         <div class="lesson-image">
                             <img :src="lesson.image" :alt="lesson.subject">
                         </div>
@@ -44,9 +48,14 @@
                             <p>Location: {{ lesson.location }}</p>
                             <p>Price: £{{ lesson.price }}</p>
                             <p>Spaces: {{ lesson.spaces }}</p>
-                            <button class="add-to-cart-btn" @click="addToCart(lesson)" :disabled="lesson.spaces === 0">
-                                Add to Cart
-                            </button>
+                            <div class="card-actions">
+                                <button class="add-to-cart-btn" @click="addToCart(lesson)" :disabled="lesson.spaces === 0">
+                                    Add to Cart
+                                </button>
+                                <button class="remove-one-btn" v-if="cartCount(lesson.id) > 0" @click="removeOneFromCart(lesson)">
+                                    Remove
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

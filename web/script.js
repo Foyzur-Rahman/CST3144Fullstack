@@ -87,7 +87,8 @@ const app = Vue.createApp({
             ],
             cart: [],
             sortAttribute: 'subject',
-            sortOrder: 'asc'
+            sortOrder: 'asc',
+            searchQuery: ''
         };
     },
     methods: {
@@ -99,14 +100,36 @@ const app = Vue.createApp({
             this.cart.splice(index, 1);
             item.spaces += 1;
         },
+        removeOneFromCart(lesson) {
+            const index = this.cart.findIndex(item => item.id === lesson.id);
+            if (index !== -1) {
+                this.removeFromCart(this.cart[index], index);
+            }
+        },
         toggleCartPage() {
             this.showCartPage = !this.showCartPage;
+        },
+        cartCount(lessonId) {
+            let count = 0;
+            for (let i = 0; i < this.cart.length; i++) {
+                if (this.cart[i].id === lessonId) {
+                    count++;
+                }
+            }
+            return count;
         }
     },
     computed: {
-        sortedLessons() {
+        filteredAndSortedLessons() {
             let lessonsArray = this.lessons.slice(0);
-            
+
+            if (this.searchQuery) {
+                lessonsArray = lessonsArray.filter(lesson =>
+                    lesson.subject.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                    lesson.location.toLowerCase().includes(this.searchQuery.toLowerCase())
+                );
+            }
+
             lessonsArray.sort((a, b) => {
                 let comparison = 0;
                 if (a[this.sortAttribute] > b[this.sortAttribute]) {

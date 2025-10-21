@@ -1,7 +1,7 @@
 const app = Vue.createApp({
     data() {
         return {
-            siteName: 'School Lessons App'
+            siteName: 'School Lessons'
         };
     }
 });

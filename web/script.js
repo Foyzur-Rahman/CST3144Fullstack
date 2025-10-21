@@ -41,6 +41,10 @@ const app = Vue.createApp({
         };
     },
     methods: {
+        addToCart(lesson) {
+            this.cart.push(lesson);
+            lesson.spaces -= 1;
+        },
         toggleCartPage() {
             this.showCartPage = !this.showCartPage;
         }

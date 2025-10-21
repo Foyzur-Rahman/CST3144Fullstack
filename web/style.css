@@ -53,6 +53,12 @@ body {
     cursor: pointer;
     min-width: 130px;
     text-align: center;
+    transition: background-color 0.2s ease;
+}
+
+.cart-button:disabled {
+    background-color: #a0aec0;
+    cursor: not-allowed;
 }
 
 main.container {
@@ -114,6 +120,12 @@ main.container {
     margin-top: auto;
     border-radius: 6px;
     cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.add-to-cart-btn:disabled {
+    background-color: #a0aec0;
+    cursor: not-allowed;
 }
 
 /* Cart Page Styles */
@@ -135,6 +147,20 @@ main.container {
     margin-bottom: 1rem;
     border-bottom: 1px solid #e2e8f0;
     padding-bottom: 0.5rem;
+}
+
+.cart-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.item-details h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
 }
 
 .form-group {

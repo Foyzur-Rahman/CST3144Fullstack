@@ -149,14 +149,20 @@ const app = Vue.createApp({
 
             return lessonsArray;
         },
+        isNameValid() {
+            return /^[A-Za-z\s]+$/.test(this.checkoutName);
+        },
+        isPhoneValid() {
+            return /^\d+$/.test(this.checkoutPhone);
+        },
         isCheckoutFormInvalid() {
-            const nameRegex = /^[A-Za-z\s]+$/;
-            const phoneRegex = /^\d+$/;
-            
-            const isNameInvalid = !nameRegex.test(this.checkoutName);
-            const isPhoneInvalid = !phoneRegex.test(this.checkoutPhone);
-
-            return isNameInvalid || isPhoneInvalid;
+            return !this.isNameValid || !this.isPhoneValid;
+        },
+        showNameError() {
+            return this.checkoutName !== '' && !this.isNameValid;
+        },
+        showPhoneError() {
+            return this.checkoutPhone !== '' && !this.isPhoneValid;
         }
     }
 });

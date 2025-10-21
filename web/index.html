@@ -80,11 +80,13 @@
                         <h2>Checkout</h2>
                         <div class="form-group">
                             <label for="name">Name:</label>
-                            <input type="text" id="name" v-model="checkoutName">
+                            <input type="text" id="name" v-model="checkoutName" :class="{'invalid-input': showNameError}">
+                            <p class="error-message" v-if="showNameError">Name must contain letters only.</p>
                         </div>
                         <div class="form-group">
                             <label for="phone">Phone:</label>
-                            <input type="text" id="phone" v-model="checkoutPhone">
+                            <input type="text" id="phone" v-model="checkoutPhone" :class="{'invalid-input': showPhoneError}">
+                            <p class="error-message" v-if="showPhoneError">Phone must contain numbers only.</p>
                         </div>
                         <button class="checkout-btn" @click="submitOrder" :disabled="isCheckoutFormInvalid">
                             Submit Order

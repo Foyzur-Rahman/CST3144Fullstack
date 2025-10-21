@@ -88,7 +88,9 @@ const app = Vue.createApp({
             cart: [],
             sortAttribute: 'subject',
             sortOrder: 'asc',
-            searchQuery: ''
+            searchQuery: '',
+            checkoutName: '',
+            checkoutPhone: ''
         };
     },
     methods: {
@@ -117,6 +119,11 @@ const app = Vue.createApp({
                 }
             }
             return count;
+        },
+        submitOrder() {
+            alert('Order submitted successfully!');
+            this.cart = [];
+            this.showCartPage = false;
         }
     },
     computed: {
@@ -141,6 +148,15 @@ const app = Vue.createApp({
             });
 
             return lessonsArray;
+        },
+        isCheckoutFormInvalid() {
+            const nameRegex = /^[A-Za-z\s]+$/;
+            const phoneRegex = /^\d+$/;
+            
+            const isNameInvalid = !nameRegex.test(this.checkoutName);
+            const isPhoneInvalid = !phoneRegex.test(this.checkoutPhone);
+
+            return isNameInvalid || isPhoneInvalid;
         }
     }
 });

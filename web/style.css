@@ -263,4 +263,10 @@ main.container {
     border-radius: 6px;
     font-size: 1rem;
     cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.checkout-btn:disabled {
+    background-color: #a0aec0;
+    cursor: not-allowed;
 }

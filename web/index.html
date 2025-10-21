@@ -19,7 +19,6 @@
         </header>
 
         <main class="container">
-            <!-- Show Lessons Page -->
             <div v-if="!showCartPage">
                 <div class="controls-bar">
                     <div class="search-wrapper">
@@ -81,13 +80,15 @@
                         <h2>Checkout</h2>
                         <div class="form-group">
                             <label for="name">Name:</label>
-                            <input type="text" id="name">
+                            <input type="text" id="name" v-model="checkoutName">
                         </div>
                         <div class="form-group">
                             <label for="phone">Phone:</label>
-                            <input type="text" id="phone">
+                            <input type="text" id="phone" v-model="checkoutPhone">
                         </div>
-                        <button class="checkout-btn">Submit Order</button>
+                        <button class="checkout-btn" @click="submitOrder" :disabled="isCheckoutFormInvalid">
+                            Submit Order
+                        </button>
                     </div>
                 </div>
             </div>

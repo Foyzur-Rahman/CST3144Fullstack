@@ -4,10 +4,28 @@
     padding: 0;
 }
 
+:root {
+    --primary-color: #007bff;
+    --primary-dark: #0056b3;
+    --secondary-color: #28a745;
+    --secondary-dark: #1e7e34;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --light-color: #f8f9fa;
+    --text-color: #343a40;
+    --text-light: #6c757d;
+    --bg-color: #f4f7f6;
+    --white: #ffffff;
+    --border-color: #dee2e6;
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 8px rgba(0,0,0,0.07);
+    --border-radius: 8px;
+}
+
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f4f7f6;
-    color: #333;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     line-height: 1.6;
 }
 
@@ -22,13 +40,13 @@ body {
 }
 
 .app-header {
-    background-color: #ffffff;
+    background-color: var(--white);
     padding: 1rem 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    border-bottom: 1px solid #e2e8f0;
+    box-shadow: var(--shadow-sm);
+    border-bottom: 1px solid var(--border-color);
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 1000;
 }
 
 .header-content {
@@ -38,22 +56,33 @@ body {
 }
 
 .logo {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #2c3e50;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .cart-button {
-    background-color: #3498db;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--white);
     border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
-    font-weight: 500;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
     cursor: pointer;
-    min-width: 130px;
-    text-align: center;
-    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.cart-button:hover:not(:disabled) {
+    background-color: var(--primary-dark);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
 }
 
 .cart-button:disabled {
@@ -62,33 +91,50 @@ body {
 }
 
 main.container {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
 }
 
 .controls-bar {
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
     padding: 1rem;
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 20px;
     flex-wrap: wrap;
+    box-shadow: var(--shadow-sm);
 }
 
 .search-wrapper {
     flex-grow: 1;
+    position: relative;
+}
+
+.search-wrapper i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
 }
 
 .search-wrapper input {
     width: 100%;
-    padding: 10px 15px;
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
+    padding: 12px 15px 12px 45px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
     font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.search-wrapper input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.15);
 }
 
 .sort-wrapper {
@@ -99,41 +145,59 @@ main.container {
 
 .sort-wrapper label {
     font-weight: 500;
+    margin-right: 5px;
 }
 
 .sort-wrapper select, .sort-wrapper button {
-    border: 1px solid #cbd5e1;
+    border: 1px solid var(--border-color);
     padding: 8px 12px;
-    border-radius: 6px;
-    background-color: #f8fafc;
+    border-radius: var(--border-radius);
+    background-color: var(--light-color);
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sort-wrapper select {
+    font-weight: 500;
+}
+
+.sort-wrapper button:hover {
+    background-color: #e2e6ea;
 }
 
 .sort-wrapper button.active {
-    background-color: #3498db;
+    background-color: var(--primary-color);
     color: white;
-    border-color: #3498db;
+    border-color: var(--primary-color);
 }
 
 .lessons-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
+    gap: 2.5rem;
 }
 
 .lesson-card {
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
     overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    box-shadow: var(--shadow-sm);
     display: flex;
     flex-direction: column;
+    transition: all 0.3s ease;
+}
+
+.lesson-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
 }
 
 .lesson-image {
-    background-color: #e2e8f0;
+    background-color: var(--light-color);
     height: 180px;
+    position: relative;
+    overflow: hidden;
 }
 
 .lesson-image img {
@@ -142,26 +206,52 @@ main.container {
     object-fit: cover;
 }
 
+.lesson-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--primary-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
 .lesson-details {
-    padding: 1rem;
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
 }
 
 .lesson-details h2 {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
 }
 
 .lesson-details p {
-    font-size: 0.9rem;
-    color: #718096;
-    margin-bottom: 0.25rem;
+    font-size: 1rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.lesson-details p i {
+    color: var(--primary-color);
+    width: 20px;
+    text-align: center;
 }
 
 .card-actions {
-    margin-top: auto;
+    margin-top: 1.5rem;
     display: flex;
     gap: 10px;
 }
@@ -169,21 +259,36 @@ main.container {
 .add-to-cart-btn, .remove-one-btn {
     color: white;
     border: none;
-    padding: 10px;
+    padding: 12px;
     width: 100%;
-    border-radius: 6px;
+    border-radius: var(--border-radius);
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 .add-to-cart-btn {
-    background-color: #2ecc71;
+    background-color: var(--secondary-color);
+}
+
+.add-to-cart-btn:hover:not(:disabled) {
+    background-color: var(--secondary-dark);
 }
 
 .remove-one-btn {
-    background-color: #f39c12;
+    background-color: var(--warning-color);
+    color: #333;
     flex-shrink: 0;
     width: auto;
+}
+
+.remove-one-btn:hover {
+    background-color: #e0a800;
 }
 
 .add-to-cart-btn:disabled {
@@ -194,29 +299,30 @@ main.container {
 .cart-container {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    gap: 2rem;
+    gap: 2.5rem;
     align-items: flex-start;
 }
 
 .cart-items, .checkout-form {
-    background: #ffffff;
-    padding: 1.5rem;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
+    background: var(--white);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
 }
 
 .cart-items h2, .checkout-form h2 {
-    margin-bottom: 1rem;
-    border-bottom: 1px solid #e2e8f0;
-    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
 }
 
 .cart-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 0;
-    border-bottom: 1px solid #e2e8f0;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .cart-item:last-child {
@@ -224,46 +330,75 @@ main.container {
 }
 
 .item-details h3 {
-    font-size: 1.1rem;
-    margin-bottom: 0.25rem;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.item-details p {
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .remove-item-btn {
-    background-color: #e74c3c;
+    background-color: var(--danger-color);
     color: white;
     border: none;
-    padding: 8px 12px;
-    border-radius: 6px;
+    padding: 10px 15px;
+    border-radius: var(--border-radius);
     cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.remove-item-btn:hover {
+    background-color: #c82333;
 }
 
 .form-group {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .form-group label {
     display: block;
     margin-bottom: 0.5rem;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .form-group input {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.15);
 }
 
 .checkout-btn {
-    background-color: #3498db;
+    background-color: var(--primary-color);
     color: white;
     border: none;
-    padding: 12px;
+    padding: 15px;
     width: 100%;
-    border-radius: 6px;
-    font-size: 1rem;
+    border-radius: var(--border-radius);
+    font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: all 0.3s ease;
+}
+
+.checkout-btn:hover:not(:disabled) {
+    background-color: var(--primary-dark);
+    box-shadow: var(--shadow-md);
 }
 
 .checkout-btn:disabled {
@@ -272,11 +407,12 @@ main.container {
 }
 
 .invalid-input {
-    border-color: #e74c3c !important;
+    border-color: var(--danger-color) !important;
+    background-color: #fdd;
 }
 
 .error-message {
-    color: #e74c3c;
-    font-size: 0.8rem;
+    color: var(--danger-color);
+    font-size: 0.9rem;
     margin-top: 5px;
 }

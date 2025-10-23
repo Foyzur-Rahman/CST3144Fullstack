@@ -5,15 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>School Lessons App</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body>
     <div id="app" v-cloak>
         <header class="app-header">
             <div class="container header-content">
-                <h1 class="logo">{{ siteName }}</h1>
+                <h1 class="logo"><i class="fas fa-graduation-cap"></i> {{ siteName }}</h1>
                 <button class="cart-button" @click="toggleCartPage" :disabled="cart.length === 0">
-                    {{ showCartPage ? 'Back to Lessons' : 'Cart (' + cart.length + ')' }}
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>{{ showCartPage ? 'Back to Lessons' : 'Cart (' + cart.length + ')' }}</span>
                 </button>
             </div>
         </header>
@@ -22,6 +27,7 @@
             <div v-if="!showCartPage">
                 <div class="controls-bar">
                     <div class="search-wrapper">
+                        <i class="fas fa-search"></i>
                         <input type="text" v-model="searchQuery" placeholder="Search for lessons...">
                     </div>
                     <div class="sort-wrapper">
@@ -32,8 +38,8 @@
                             <option value="price">Price</option>
                             <option value="spaces">Spaces</option>
                         </select>
-                        <button @click="sortOrder = 'asc'" :class="{ active: sortOrder === 'asc' }">Asc</button>
-                        <button @click="sortOrder = 'desc'" :class="{ active: sortOrder === 'desc' }">Desc</button>
+                        <button @click="sortOrder = 'asc'" :class="{ active: sortOrder === 'asc' }"><i class="fas fa-arrow-up"></i> Asc</button>
+                        <button @click="sortOrder = 'desc'" :class="{ active: sortOrder === 'desc' }"><i class="fas fa-arrow-down"></i> Desc</button>
                     </div>
                 </div>
 
@@ -41,18 +47,19 @@
                     <div class="lesson-card" v-for="lesson in filteredAndSortedLessons" :key="lesson.id">
                         <div class="lesson-image">
                             <img :src="lesson.image" :alt="lesson.subject">
+                            <span class="lesson-icon"><i :class="lesson.icon"></i></span>
                         </div>
                         <div class="lesson-details">
                             <h2>{{ lesson.subject }}</h2>
-                            <p>Location: {{ lesson.location }}</p>
-                            <p>Price: £{{ lesson.price }}</p>
-                            <p>Spaces: {{ lesson.spaces }}</p>
+                            <p><i class="fas fa-map-marker-alt"></i> Location: {{ lesson.location }}</p>
+                            <p><i class="fas fa-tags"></i> Price: £{{ lesson.price }}</p>
+                            <p><i class="fas fa-user-friends"></i> Spaces: {{ lesson.spaces }}</p>
                             <div class="card-actions">
                                 <button class="add-to-cart-btn" @click="addToCart(lesson)" :disabled="lesson.spaces === 0">
-                                    Add to Cart
+                                    <i class="fas fa-plus"></i> Add to Cart
                                 </button>
                                 <button class="remove-one-btn" v-if="cartCount(lesson.id) > 0" @click="removeOneFromCart(lesson)">
-                                    Remove
+                                    <i class="fas fa-minus"></i> Remove
                                 </button>
                             </div>
                         </div>
@@ -68,10 +75,10 @@
                             <div class="cart-item" v-for="(item, index) in cart" :key="index">
                                 <div class="item-details">
                                     <h3>{{ item.subject }}</h3>
-                                    <p>Location: {{ item.location }}</p>
-                                    <p>Price: £{{ item.price }}</p>
+                                    <p><i class="fas fa-map-marker-alt"></i> {{ item.location }}</p>
+                                    <p><i class="fas fa-tags"></i> £{{ item.price }}</p>
                                 </div>
-                                <button class="remove-item-btn" @click="removeFromCart(item, index)">Remove</button>
+                                <button class="remove-item-btn" @click="removeFromCart(item, index)"><i class="fas fa-trash-alt"></i> Remove</button>
                             </div>
                         </div>
                         <p v-else>Your cart is currently empty.</p>

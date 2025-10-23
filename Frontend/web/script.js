@@ -10,7 +10,8 @@ const app = Vue.createApp({
                     location: 'London',
                     price: 100,
                     spaces: 5,
-                    image: 'img/math.png'
+                    image: 'img/math.png',
+                    icon: 'fas fa-calculator'
                 },
                 {
                     id: 2,
@@ -18,7 +19,8 @@ const app = Vue.createApp({
                     location: 'Bristol',
                     price: 120,
                     spaces: 5,
-                    image: 'img/science.png'
+                    image: 'img/science.png',
+                    icon: 'fas fa-flask'
                 },
                 {
                     id: 3,
@@ -26,7 +28,8 @@ const app = Vue.createApp({
                     location: 'Online',
                     price: 90,
                     spaces: 5,
-                    image: 'img/english.png'
+                    image: 'img/english.png',
+                    icon: 'fas fa-pencil-alt'
                 },
                 {
                     id: 4,
@@ -34,7 +37,8 @@ const app = Vue.createApp({
                     location: 'Manchester',
                     price: 95,
                     spaces: 5,
-                    image: 'img/history.png'
+                    image: 'img/history.png',
+                    icon: 'fas fa-landmark'
                 },
                 {
                     id: 5,
@@ -42,7 +46,8 @@ const app = Vue.createApp({
                     location: 'London',
                     price: 80,
                     spaces: 5,
-                    image: 'img/art.png'
+                    image: 'img/art.png',
+                    icon: 'fas fa-palette'
                 },
                 {
                     id: 6,
@@ -50,7 +55,8 @@ const app = Vue.createApp({
                     location: 'Online',
                     price: 85,
                     spaces: 5,
-                    image: 'img/music.png'
+                    image: 'img/music.png',
+                    icon: 'fas fa-music'
                 },
                 {
                     id: 7,
@@ -58,7 +64,8 @@ const app = Vue.createApp({
                     location: 'Birmingham',
                     price: 110,
                     spaces: 5,
-                    image: 'img/geography.png'
+                    image: 'img/geography.png',
+                    icon: 'fas fa-globe-americas'
                 },
                 {
                     id: 8,
@@ -66,7 +73,8 @@ const app = Vue.createApp({
                     location: 'Online',
                     price: 130,
                     spaces: 5,
-                    image: 'img/computing.png'
+                    image: 'img/computing.png',
+                    icon: 'fas fa-laptop-code'
                 },
                 {
                     id: 9,
@@ -74,7 +82,8 @@ const app = Vue.createApp({
                     location: 'London',
                     price: 90,
                     spaces: 5,
-                    image: 'img/drama.png'
+                    image: 'img/drama.png',
+                    icon: 'fas fa-theater-masks'
                 },
                 {
                     id: 10,
@@ -82,7 +91,8 @@ const app = Vue.createApp({
                     location: 'Manchester',
                     price: 105,
                     spaces: 5,
-                    image: 'img/sport.png'
+                    image: 'img/sport.png',
+                    icon: 'fas fa-futbol'
                 }
             ],
             cart: [],
@@ -156,7 +166,7 @@ const app = Vue.createApp({
             return /^\d+$/.test(this.checkoutPhone);
         },
         isCheckoutFormInvalid() {
-            return !this.isNameValid || !this.isPhoneValid;
+            return !this.isNameValid || !this.isPhoneValid || this.checkoutName === '' || this.checkoutPhone === '';
         },
         showNameError() {
             return this.checkoutName !== '' && !this.isNameValid;

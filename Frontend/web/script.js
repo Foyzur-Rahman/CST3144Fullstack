@@ -3,98 +3,7 @@ const app = Vue.createApp({
         return {
             siteName: 'School Lessons',
             showCartPage: false,
-            lessons: [
-                {
-                    id: 1,
-                    subject: 'Mathematics',
-                    location: 'London',
-                    price: 100,
-                    spaces: 5,
-                    image: 'img/math.png',
-                    icon: 'fas fa-calculator'
-                },
-                {
-                    id: 2,
-                    subject: 'Science',
-                    location: 'Bristol',
-                    price: 120,
-                    spaces: 5,
-                    image: 'img/science.png',
-                    icon: 'fas fa-flask'
-                },
-                {
-                    id: 3,
-                    subject: 'English',
-                    location: 'Online',
-                    price: 90,
-                    spaces: 5,
-                    image: 'img/english.png',
-                    icon: 'fas fa-pencil-alt'
-                },
-                {
-                    id: 4,
-                    subject: 'History',
-                    location: 'Manchester',
-                    price: 95,
-                    spaces: 5,
-                    image: 'img/history.png',
-                    icon: 'fas fa-landmark'
-                },
-                {
-                    id: 5,
-                    subject: 'Art',
-                    location: 'London',
-                    price: 80,
-                    spaces: 5,
-                    image: 'img/art.png',
-                    icon: 'fas fa-palette'
-                },
-                {
-                    id: 6,
-                    subject: 'Music',
-                    location: 'Online',
-                    price: 85,
-                    spaces: 5,
-                    image: 'img/music.png',
-                    icon: 'fas fa-music'
-                },
-                {
-                    id: 7,
-                    subject: 'Geography',
-                    location: 'Birmingham',
-                    price: 110,
-                    spaces: 5,
-                    image: 'img/geography.png',
-                    icon: 'fas fa-globe-americas'
-                },
-                {
-                    id: 8,
-                    subject: 'Computing',
-                    location: 'Online',
-                    price: 130,
-                    spaces: 5,
-                    image: 'img/computing.png',
-                    icon: 'fas fa-laptop-code'
-                },
-                {
-                    id: 9,
-                    subject: 'Drama',
-                    location: 'London',
-                    price: 90,
-                    spaces: 5,
-                    image: 'img/drama.png',
-                    icon: 'fas fa-theater-masks'
-                },
-                {
-                    id: 10,
-                    subject: 'Sport',
-                    location: 'Manchester',
-                    price: 105,
-                    spaces: 5,
-                    image: 'img/sport.png',
-                    icon: 'fas fa-futbol'
-                }
-            ],
+            lessons: [],
             cart: [],
             sortAttribute: 'subject',
             sortOrder: 'asc',
@@ -134,6 +43,21 @@ const app = Vue.createApp({
             alert('Order submitted successfully!');
             this.cart = [];
             this.showCartPage = false;
+        },
+        fetchLessons() {
+            fetch('http://localhost:3000/lessons')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    this.lessons = data;
+                })
+                .catch(error => {
+                    console.error('Error fetching lessons:', error);
+                });
         }
     },
     computed: {
@@ -174,6 +98,9 @@ const app = Vue.createApp({
         showPhoneError() {
             return this.checkoutPhone !== '' && !this.isPhoneValid;
         }
+    },
+    created() {
+        this.fetchLessons();
     }
 });
 

@@ -22,7 +22,7 @@ const app = Vue.createApp({
             item.spaces += 1;
         },
         removeOneFromCart(lesson) {
-            const index = this.cart.findIndex(item => item.id === lesson.id);
+            const index = this.cart.findIndex(item => item._id === lesson._id);
             if (index !== -1) {
                 this.removeFromCart(this.cart[index], index);
             }
@@ -30,19 +30,51 @@ const app = Vue.createApp({
         toggleCartPage() {
             this.showCartPage = !this.showCartPage;
         },
-        cartCount(lessonId) {
+        cartCount(lesson_id) {
             let count = 0;
             for (let i = 0; i < this.cart.length; i++) {
-                if (this.cart[i].id === lessonId) {
+                if (this.cart[i]._id === lesson_id) {
                     count++;
                 }
             }
             return count;
         },
         submitOrder() {
-            alert('Order submitted successfully!');
-            this.cart = [];
-            this.showCartPage = false;
+            const order = {
+                name: this.checkoutName,
+                phone: this.checkoutPhone,
+                items: this.cart
+            };
+
+            fetch('http://localhost:3000/orders', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(order)
+            })
+            .then(response => response.json())
+            .then(orderData => {
+                console.log('Order saved:', orderData);
+                
+                this.cart.forEach(item => {
+                    fetch(`http://localhost:3000/lessons/${item._id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ spaces: item.spaces })
+                    })
+                    .then(response => response.json())
+                    .then(updateData => console.log('Lesson updated:', updateData))
+                    .catch(err => console.error('Error updating lesson:', err));
+                });
+
+                alert('Order submitted successfully!');
+                this.cart = [];
+                this.checkoutName = '';
+                this.checkoutPhone = '';
+                this.showCartPage = false;
+            })
+            .catch(error => {
+                console.error('Error submitting order:', error);
+            });
         },
         fetchLessons() {
             fetch('http://localhost:3000/lessons')

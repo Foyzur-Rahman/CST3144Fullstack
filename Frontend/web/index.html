@@ -48,7 +48,7 @@
                 <div class="lessons-grid">
                     <div class="lesson-card" v-for="lesson in filteredAndSortedLessons" :key="lesson.id">
                         <div class="lesson-image">
-                            <img :src="lesson.image" :alt="lesson.subject">
+                            <img :src="'http://localhost:3000/images/' + lesson.image" :alt="lesson.subject">
                             <span class="lesson-icon"><i :class="lesson.icon"></i></span>
                         </div>
                         <div class="lesson-details">

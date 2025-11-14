@@ -18,7 +18,7 @@
         <header class="app-header">
             <div class="container header-content">
                 <h1 class="logo"><i class="fas fa-graduation-cap"></i> {{ siteName }}</h1>
-                <button class="cart-button" @click="toggleCartPage" :disabled="cart.length === 0">
+                <button class="cart-button" @click="toggleCartPage" :disabled="!showCartPage && cart.length === 0">
                     <i class="fas fa-shopping-cart"></i>
                     <span>{{ showCartPage ? 'Back to Lessons' : 'Cart (' + cart.length + ')' }}</span>
                 </button>
@@ -60,7 +60,7 @@
                                 <button class="add-to-cart-btn" @click="addToCart(lesson)" :disabled="lesson.spaces === 0">
                                     <i class="fas fa-plus"></i> Add to Cart
                                 </button>
-                                <button class="remove-one-btn" v-if="cartCount(lesson.id) > 0" @click="removeOneFromCart(lesson)">
+                                <button class="remove-one-btn" v-if="cartCount(lesson._id) > 0" @click="removeOneFromCart(lesson)">
                                     <i class="fas fa-minus"></i> Remove
                                 </button>
                             </div>

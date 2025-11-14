@@ -76,8 +76,13 @@ const app = Vue.createApp({
                 console.error('Error submitting order:', error);
             });
         },
-        fetchLessons() {
-            fetch('http://localhost:3000/lessons')
+        searchLessons() {
+            let url = 'http://localhost:3000/lessons';
+            if (this.searchQuery) {
+                url = `http://localhost:3000/search?q=${this.searchQuery}`;
+            }
+
+            fetch(url)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -95,14 +100,7 @@ const app = Vue.createApp({
     computed: {
         filteredAndSortedLessons() {
             let lessonsArray = this.lessons.slice(0);
-
-            if (this.searchQuery) {
-                lessonsArray = lessonsArray.filter(lesson =>
-                    lesson.subject.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-                    lesson.location.toLowerCase().includes(this.searchQuery.toLowerCase())
-                );
-            }
-
+            
             lessonsArray.sort((a, b) => {
                 let comparison = 0;
                 if (a[this.sortAttribute] > b[this.sortAttribute]) {
@@ -114,25 +112,15 @@ const app = Vue.createApp({
             });
 
             return lessonsArray;
-        },
-        isNameValid() {
-            return /^[A-Za-z\s]+$/.test(this.checkoutName);
-        },
-        isPhoneValid() {
-            return /^\d+$/.test(this.checkoutPhone);
-        },
-        isCheckoutFormInvalid() {
-            return !this.isNameValid || !this.isPhoneValid || this.checkoutName === '' || this.checkoutPhone === '';
-        },
-        showNameError() {
-            return this.checkoutName !== '' && !this.isNameValid;
-        },
-        showPhoneError() {
-            return this.checkoutPhone !== '' && !this.isPhoneValid;
+        }
+    },
+    watch: {
+        searchQuery() {
+            this.searchLessons();
         }
     },
     created() {
-        this.fetchLessons();
+        this.searchLessons();
     }
 });
 

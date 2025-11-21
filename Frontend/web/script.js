@@ -53,17 +53,13 @@ const app = Vue.createApp({
             })
             .then(response => response.json())
             .then(orderData => {
-                console.log('Order saved:', orderData);
                 
                 this.cart.forEach(item => {
                     fetch(`http://localhost:3000/lessons/${item._id}`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ spaces: item.spaces })
-                    })
-                    .then(response => response.json())
-                    .then(updateData => console.log('Lesson updated:', updateData))
-                    .catch(err => console.error('Error updating lesson:', err));
+                    });
                 });
 
                 alert('Order submitted successfully!');
@@ -73,7 +69,7 @@ const app = Vue.createApp({
                 this.showCartPage = false;
             })
             .catch(error => {
-                console.error('Error submitting order:', error);
+                console.error(error);
             });
         },
         searchLessons() {
@@ -93,7 +89,7 @@ const app = Vue.createApp({
                     this.lessons = data;
                 })
                 .catch(error => {
-                    console.error('Error fetching lessons:', error);
+                    console.error(error);
                 });
         }
     },
@@ -112,6 +108,20 @@ const app = Vue.createApp({
             });
 
             return lessonsArray;
+        },
+        isCheckoutFormInvalid() {
+            return this.checkoutName === '' || 
+                   this.checkoutPhone === '' || 
+                   this.showNameError || 
+                   this.showPhoneError;
+        },
+        showNameError() {
+            const nameRegex = /^[A-Za-z\s]+$/;
+            return this.checkoutName !== '' && !nameRegex.test(this.checkoutName);
+        },
+        showPhoneError() {
+            const phoneRegex = /^[0-9]+$/;
+            return this.checkoutPhone !== '' && !phoneRegex.test(this.checkoutPhone);
         }
     },
     watch: {

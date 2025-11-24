@@ -46,7 +46,7 @@ const app = Vue.createApp({
                 items: this.cart
             };
 
-            fetch('http://localhost:3000/orders', {
+            fetch('https://cst3144-backend1.onrender.com/orders', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(order)
@@ -55,7 +55,7 @@ const app = Vue.createApp({
             .then(orderData => {
                 
                 this.cart.forEach(item => {
-                    fetch(`http://localhost:3000/lessons/${item._id}`, {
+                    fetch(`https://cst3144-backend1.onrender.com/lessons/${item._id}`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ spaces: item.spaces })
@@ -73,9 +73,9 @@ const app = Vue.createApp({
             });
         },
         searchLessons() {
-            let url = 'http://localhost:3000/lessons';
+            let url = 'https://cst3144-backend1.onrender.com/lessons';
             if (this.searchQuery) {
-                url = `http://localhost:3000/search?q=${this.searchQuery}`;
+                url = `https://cst3144-backend1.onrender.com/search?q=${this.searchQuery}`;
             }
 
             fetch(url)

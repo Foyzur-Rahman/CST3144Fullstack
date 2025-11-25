@@ -1,35 +1,49 @@
 const app = Vue.createApp({
     data() {
         return {
+            // App state variables
             siteName: 'School Lessons',
             showCartPage: false,
             lessons: [],
             cart: [],
+            searchQuery: '',
+            
+            // Sort settings
             sortAttribute: 'subject',
             sortOrder: 'asc',
-            searchQuery: '',
+            
+            // Checkout form data
             checkoutName: '',
             checkoutPhone: ''
         };
     },
     methods: {
+        // Add item to cart and decrease availability
         addToCart(lesson) {
             this.cart.push(lesson);
             lesson.spaces -= 1;
         },
+        
+        // Remove item from cart and restores availability
         removeFromCart(item, index) {
             this.cart.splice(index, 1);
             item.spaces += 1;
         },
+
+        // Remove specific item from cart (used in lesson view)
         removeOneFromCart(lesson) {
             const index = this.cart.findIndex(item => item._id === lesson._id);
             if (index !== -1) {
                 this.removeFromCart(this.cart[index], index);
             }
         },
+        
+        // Navigation toggle
         toggleCartPage() {
             this.showCartPage = !this.showCartPage;
         },
+        
+        // Helper to count items in cart
         cartCount(lesson_id) {
             let count = 0;
             for (let i = 0; i < this.cart.length; i++) {
@@ -39,6 +53,8 @@ const app = Vue.createApp({
             }
             return count;
         },
+        
+        // Handle order submission
         submitOrder() {
             const order = {
                 name: this.checkoutName,
@@ -46,14 +62,14 @@ const app = Vue.createApp({
                 items: this.cart
             };
 
+            // Send order to backend
             fetch('https://cst3144-backend1.onrender.com/orders', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(order)
             })
-            .then(response => response.json())
-            .then(orderData => {
-                
+            .then(() => {
+                // Update backend for each purchased item
                 this.cart.forEach(item => {
                     fetch(`https://cst3144-backend1.onrender.com/lessons/${item._id}`, {
                         method: 'PUT',
@@ -61,75 +77,68 @@ const app = Vue.createApp({
                         body: JSON.stringify({ spaces: item.spaces })
                     });
                 });
-
-                alert('Order submitted successfully!');
+                
+                // Reset app state
+                alert('Order submitted!');
                 this.cart = [];
                 this.checkoutName = '';
                 this.checkoutPhone = '';
                 this.showCartPage = false;
-            })
-            .catch(error => {
-                console.error(error);
             });
         },
+        
+        // Fetch lesson data when searching from backend
         searchLessons() {
             let url = 'https://cst3144-backend1.onrender.com/lessons';
+            
             if (this.searchQuery) {
                 url = `https://cst3144-backend1.onrender.com/search?q=${this.searchQuery}`;
             }
 
             fetch(url)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(data => {
                     this.lessons = data;
-                })
-                .catch(error => {
-                    console.error(error);
                 });
         }
     },
     computed: {
+        // Sort logic for the lessons list
         filteredAndSortedLessons() {
-            let lessonsArray = this.lessons.slice(0);
-            
-            lessonsArray.sort((a, b) => {
-                let comparison = 0;
-                if (a[this.sortAttribute] > b[this.sortAttribute]) {
-                    comparison = 1;
-                } else if (a[this.sortAttribute] < b[this.sortAttribute]) {
-                    comparison = -1;
-                }
-                return (this.sortOrder === 'asc') ? comparison : comparison * -1;
+            let temp = this.lessons.slice(0);
+            return temp.sort((a, b) => {
+                if (a[this.sortAttribute] > b[this.sortAttribute]) return 1;
+                if (a[this.sortAttribute] < b[this.sortAttribute]) return -1;
+                return 0;
             });
-
-            return lessonsArray;
         },
+        
+        // Form validation logic
         isCheckoutFormInvalid() {
             return this.checkoutName === '' || 
                    this.checkoutPhone === '' || 
                    this.showNameError || 
                    this.showPhoneError;
         },
+        
+        // Input validation helpers
         showNameError() {
-            const nameRegex = /^[A-Za-z\s]+$/;
-            return this.checkoutName !== '' && !nameRegex.test(this.checkoutName);
+            const regex = /^[A-Za-z\s]+$/;
+            return this.checkoutName !== '' && !regex.test(this.checkoutName);
         },
         showPhoneError() {
-            const phoneRegex = /^[0-9]+$/;
-            return this.checkoutPhone !== '' && !phoneRegex.test(this.checkoutPhone);
+            const regex = /^[0-9]+$/;
+            return this.checkoutPhone !== '' && !regex.test(this.checkoutPhone);
         }
     },
     watch: {
+        // Real-time search
         searchQuery() {
             this.searchLessons();
         }
     },
     created() {
+        // Initial data load
         this.searchLessons();
     }
 });

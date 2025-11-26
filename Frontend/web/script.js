@@ -105,12 +105,28 @@ const app = Vue.createApp({
     computed: {
         // Sort logic for the lessons list
         filteredAndSortedLessons() {
-            let temp = this.lessons.slice(0);
-            return temp.sort((a, b) => {
-                if (a[this.sortAttribute] > b[this.sortAttribute]) return 1;
-                if (a[this.sortAttribute] < b[this.sortAttribute]) return -1;
-                return 0;
+            let lessonsArray = this.lessons.slice(0);
+            
+            lessonsArray.sort((a, b) => {
+                let valA = a[this.sortAttribute];
+                let valB = b[this.sortAttribute];
+
+                // Convert strings to lowercase for fair comparison
+                if (typeof valA === 'string') valA = valA.toLowerCase();
+                if (typeof valB === 'string') valB = valB.toLowerCase();
+
+                let comparison = 0;
+                if (valA > valB) {
+                    comparison = 1;
+                } else if (valA < valB) {
+                    comparison = -1;
+                }
+
+                // Flip result if descending
+                return (this.sortOrder === 'desc') ? comparison * -1 : comparison;
             });
+
+            return lessonsArray;
         },
         
         // Form validation logic
